@@ -14,7 +14,9 @@ public class Application extends javafx.application.Application {
     public static final String FIELD_COLOR = "#A3B18A";
     public static final String ICON = "controller/icon/escape.png";
     public static final String TITLE = "Escape Room System";
-    public static final String FXML_PATH = "controller/fxml/";
+    public static final String PATH = "controller/";
+    public static final String FXML_PATH = PATH + "fxml/";
+
     public static Image icon;
 
     @Override
