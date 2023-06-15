@@ -1,7 +1,6 @@
 package qu4lizz.escape_room.utils;
 
 import qu4lizz.escape_room.Application;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +10,6 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class ConnectionPool {
-
     private static final String PROPS = "ConnectionPool.properties";
 
     private String jdbcURL;

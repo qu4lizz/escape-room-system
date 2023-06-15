@@ -1,4 +1,4 @@
-module escape_room {
+module qu4lizz.escape_room {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

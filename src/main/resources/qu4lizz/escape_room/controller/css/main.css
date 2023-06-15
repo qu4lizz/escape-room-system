@@ -704,3 +704,38 @@
     -fx-padding: 5;
     padding: 5;
 }
+
+
+.choice-box .context-menu {
+    -fx-background-color: #1A1A1A;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #4e4e4e;
+}
+
+.choice-box .menu-item > .label { -fx-text-fill: #7b7b7b;
+    -fx-pref-width: 240;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-font-size: 16px
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: #AFB1B3;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-font-size: 16px
+}
+
+.choice-box {
+    -fx-pref-width: 240;
+    -fx-background-color: #1A1A1A;
+    -fx-mark-color: #7b7b7b;
+}
+
+.choice-box > .label { -fx-text-fill: #AFB1B3;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-font-size: 18px
+}
