@@ -1,13 +1,16 @@
 package qu4lizz.escape_room.model.quests;
 
-abstract public class Task {
-    private static int idCounter = 0;
+abstract public class Quest {
     private int id;
     private String name;
     private String solution;
 
-    public Task(String name, String solution) {
-        this.id = idCounter++;
+    public Quest(String name, String solution) {
+        this.name = name;
+        this.solution = solution;
+    }
+
+    public Quest(int id, String name, String solution) {
         this.name = name;
         this.solution = solution;
     }
@@ -35,7 +38,7 @@ abstract public class Task {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        Task quest = (Task) obj;
+        Quest quest = (Quest) obj;
         return quest.id == this.id;
     }
 }

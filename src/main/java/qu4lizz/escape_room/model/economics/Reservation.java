@@ -4,28 +4,30 @@ import qu4lizz.escape_room.model.game.Room;
 import qu4lizz.escape_room.model.game.Team;
 import qu4lizz.escape_room.model.system.System;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Reservation {
     private int roomId;
     private String teamName;
-    private Date startTime;
+    private Timestamp startTime;
 
-    public Reservation(int room, String team, Date startTime) {
+    public Reservation(int room, String team, Timestamp startTime) {
         this.roomId = room;
         this.teamName = team;
         this.startTime = startTime;
     }
 
-    public Room getRoom() {
-        return System.getInstance().findRoom(roomId);
+
+
+    public int getRoom() {
+        return roomId;
     }
 
-    public Team getTeam() {
-        return System.getInstance().findTeam(teamName);
+    public String getTeam() {
+        return teamName;
     }
 
-    public Date getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 }
