@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 
 public class Game {
-    private int roomId;
+    private String roomId;
     private String teamName;
     private String gameMasterUsername;
     private Timestamp startTime;
@@ -16,15 +16,15 @@ public class Game {
     private Long score;
     private GameLog gameLog = new GameLog();
     private HashSet<GameReview> gameReview = new HashSet<>();
-    private BigDecimal payment;
+    private BigDecimal price;
 
-    public Game(int roomId, String teamName, String gameMasterUsername) {
+    public Game(String roomId, String teamName, String gameMasterUsername) {
         this.roomId = roomId;
         this.teamName = teamName;
         this.gameMasterUsername = gameMasterUsername;
     }
 
-    public Game(int roomId, Timestamp startTime, Timestamp endTime, Long score, String teamName, String gameMasterUsername, BigDecimal payment) {
+    public Game(String roomId, Timestamp startTime, Timestamp endTime, Long score, String teamName, String gameMasterUsername, BigDecimal payment) {
         this.roomId = roomId;
         this.teamName = teamName;
         this.gameMasterUsername = gameMasterUsername;
@@ -41,7 +41,7 @@ public class Game {
         return teamName;
     }
 
-    public int getRoomId() {
+    public String getRoomId() {
         return roomId;
     }
 
@@ -69,8 +69,8 @@ public class Game {
         return gameReview;
     }
 
-    public BigDecimal getPayment() {
-        return payment;
+    public BigDecimal getPrice() {
+        return price;
     }
 
     public void startGame() {

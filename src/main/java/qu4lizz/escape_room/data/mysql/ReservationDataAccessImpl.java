@@ -21,7 +21,7 @@ public class ReservationDataAccessImpl implements ReservationDataAccess {
             conn = ConnectionPool.getInstance().checkOut();
             cs = conn.prepareCall(query);
 
-            cs.setInt(1, reservation.getRoom());
+            cs.setString(1, reservation.getRoom());
             cs.setString(2, reservation.getTeam());
             cs.setTimestamp(3, reservation.getStartTime());
 
@@ -55,7 +55,7 @@ public class ReservationDataAccessImpl implements ReservationDataAccess {
         try {
             connection = ConnectionPool.getInstance().checkOut();
             callableStatement = connection.prepareCall(callStatementItem);
-            callableStatement.setInt(1, reservation.getRoom());
+            callableStatement.setString(1, reservation.getRoom());
             callableStatement.setTimestamp(2, reservation.getStartTime());
             retVal = callableStatement.executeUpdate() == 1;
         } catch (SQLException e) {
@@ -82,7 +82,7 @@ public class ReservationDataAccessImpl implements ReservationDataAccess {
             rs = ps.executeQuery();
 
             while (rs.next())
-                retVal.add(new Reservation(rs.getInt(1), rs.getString(2), rs.getTimestamp(3)));
+                retVal.add(new Reservation(rs.getString(1), rs.getString(2), rs.getTimestamp(3)));
         } catch (SQLException e) {
             e.printStackTrace();
             SQLUtil.getInstance().showSQLException(e);

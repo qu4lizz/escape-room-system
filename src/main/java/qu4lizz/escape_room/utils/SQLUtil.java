@@ -3,10 +3,7 @@ package qu4lizz.escape_room.utils;
 import qu4lizz.escape_room.controller.PopUpController;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class SQLUtil {
     private static SQLUtil instance;
@@ -19,6 +16,35 @@ public class SQLUtil {
 
     private SQLUtil() { }
 
+
+    public static String signIn(String username, String password) throws Exception {
+        Connection conn = null;
+        CallableStatement cs = null;
+        boolean loginSuccessful;
+        int userId;
+
+        String callStatement = "{call prijava(?, ?, ?, ?)}";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            cs = conn.prepareCall(callStatement);
+            cs.setString(1, username);
+            cs.setString(2, password);
+            cs.registerOutParameter(3, Types.BOOLEAN);
+            cs.registerOutParameter(4, Types.INTEGER);
+
+            cs.executeUpdate();
+
+            loginSuccessful = cs.getBoolean(3);
+            userId = cs.getInt(4);
+
+            return loginSuccessful + "#" + userId;
+
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            SQLUtil.getInstance().close(cs);
+        }
+    }
 
 
     public void close(Connection conn) {

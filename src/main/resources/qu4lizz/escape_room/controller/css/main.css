@@ -729,7 +729,6 @@
 }
 
 .choice-box {
-    -fx-pref-width: 240;
     -fx-background-color: #1A1A1A;
     -fx-mark-color: #7b7b7b;
 }

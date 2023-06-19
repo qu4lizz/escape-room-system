@@ -41,4 +41,9 @@ abstract public class Quest {
         Quest quest = (Quest) obj;
         return quest.id == this.id;
     }
+
+    @Override
+    public String toString() {
+        return id + ": " + name;
+    }
 }

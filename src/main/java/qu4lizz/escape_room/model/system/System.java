@@ -140,7 +140,7 @@ public class System {
     }
 
     public void startGame(Reservation reservation, GameMaster gameMaster) {
-        Game game = new Game(reservation.getRoom().getId(), reservation.getTeam().getName(), gameMaster.getId());
+        Game game = new Game(reservation.getRoom().getN(), reservation.getTeam().getName(), gameMaster.getId());
         game.startGame();
         inProgressGames.add(game);
     }

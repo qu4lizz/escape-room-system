@@ -20,13 +20,13 @@ public class GameDataAccessImpl implements GameDataAccess {
         try {
             conn = ConnectionPool.getInstance().checkOut();
             cs = conn.prepareCall(query);
-            cs.setInt(1, game.getRoomId());
+            cs.setString(1, game.getRoomId());
             cs.setTimestamp(2, game.getStartTime());
             cs.setTimestamp(3, game.getEndTime());
             cs.setLong(4, game.getScore());
             cs.setString(5, game.getTeamName());
             cs.setString(6, game.getGameMasterId());
-            cs.setBigDecimal(7, game.getPayment());
+            cs.setBigDecimal(7, game.getPrice());
 
             cs.execute();
             retVal = cs.executeUpdate() == 1;
@@ -58,7 +58,7 @@ public class GameDataAccessImpl implements GameDataAccess {
             rs = ps.executeQuery();
 
             while (rs.next())
-                retVal.add(new Game(rs.getInt(1),
+                retVal.add(new Game(rs.getString(1),
                                     rs.getTimestamp(2),
                                     rs.getTimestamp(3),
                                     rs.getLong(4),

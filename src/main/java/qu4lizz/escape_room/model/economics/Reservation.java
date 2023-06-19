@@ -1,17 +1,13 @@
 package qu4lizz.escape_room.model.economics;
 
-import qu4lizz.escape_room.model.game.Room;
-import qu4lizz.escape_room.model.game.Team;
-import qu4lizz.escape_room.model.system.System;
-
 import java.sql.Timestamp;
 
 public class Reservation {
-    private int roomId;
+    private String roomId;
     private String teamName;
     private Timestamp startTime;
 
-    public Reservation(int room, String team, Timestamp startTime) {
+    public Reservation(String room, String team, Timestamp startTime) {
         this.roomId = room;
         this.teamName = team;
         this.startTime = startTime;
@@ -19,7 +15,7 @@ public class Reservation {
 
 
 
-    public int getRoom() {
+    public String getRoom() {
         return roomId;
     }
 
@@ -29,5 +25,14 @@ public class Reservation {
 
     public Timestamp getStartTime() {
         return startTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "roomId='" + roomId + '\'' +
+                ", teamName='" + teamName + '\'' +
+                ", startTime=" + startTime +
+                '}';
     }
 }
