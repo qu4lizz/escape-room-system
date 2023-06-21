@@ -2,6 +2,7 @@ package qu4lizz.escape_room.data.mysql;
 
 import qu4lizz.escape_room.data.GeneralDataAccess;
 import qu4lizz.escape_room.model.game.Team;
+import qu4lizz.escape_room.model.quests.Inventory;
 import qu4lizz.escape_room.model.users.Player;
 import qu4lizz.escape_room.utils.ConnectionPool;
 import qu4lizz.escape_room.utils.SQLUtil;
@@ -62,6 +63,32 @@ public class GeneralDataAccessImpl implements GeneralDataAccess {
                 List<Player> players = getPlayersFromTeam(teamName);
                 retVal.add(new Team(teamName, players.toArray(new Player[0])));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            SQLUtil.getInstance().showSQLException(e);
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            SQLUtil.getInstance().close(ps, rs);
+        }
+        return retVal;
+    }
+
+    @Override
+    public List<Inventory> getInventories() {
+        List<Inventory> retVal = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query =    "SELECT * "
+                + "FROM Inventory";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal.add(new Inventory(rs.getInt("idInventory"), rs.getString("location")));
         } catch (SQLException e) {
             e.printStackTrace();
             SQLUtil.getInstance().showSQLException(e);

@@ -23,36 +23,33 @@ public class SignInController {
     @FXML
     void signInMouseClicked(MouseEvent event) throws IOException {
         boolean signIn;
-        int type;
+        String type;
         String usernameInput = usernameTextField.getText();
         String passwordInput = passwordTextField.getText();
         if (usernameInput.equals("") || passwordInput.equals("")) {
             PopUpController.showStage("Sign In", "Enter valid parameters");
             return;
         }
-        try {
-            String result = SQLUtil.signIn(usernameInput, passwordInput);
-            signIn = Boolean.parseBoolean(result.split("#")[0]);
-            type = Integer.parseInt(result.split("#")[1]);
-            if (signIn) {
-                username = usernameInput;
-                if (type == 0) {
-                    AdminController.showStage();
-                }
-                else if (type == 1) {
-                    GameMasterController.showStage();
-                }
-            } else {
-                PopUpController.showStage("Sign In", "Enter valid parameters");
-                return;
-            }
-        } catch (Exception ex) {
+
+        String result = SQLUtil.signIn(usernameInput, passwordInput);
+        if (result == null) {
             PopUpController.showStage("Sign In", "Enter valid parameters");
-            ex.printStackTrace();
             return;
         }
-
-        GameMasterController.showStage();
+        signIn = Boolean.parseBoolean(result.split("#")[0]);
+        type = result.split("#")[1];
+        if (signIn) {
+            username = usernameInput;
+            if (type.equals("ADMIN")) {
+                AdminController.showStage();
+            }
+            else if (type.equals("GAMEMASTER")) {
+                GameMasterController.showStage();
+            }
+        } else {
+            PopUpController.showStage("Sign In", "Enter valid parameters");
+            return;
+        }
 
         ((Stage)usernameTextField.getScene().getWindow()).close();
     }

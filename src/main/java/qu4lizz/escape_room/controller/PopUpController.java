@@ -38,5 +38,7 @@ public class PopUpController {
         PopUpController controller = fxmlLoader.getController();
         controller.setMessage(message);
         stage.showAndWait();
+        stage.setMinHeight(420);
+        stage.setMinWidth(666);
     }
 }

@@ -1,11 +1,10 @@
 package qu4lizz.escape_room.model.users;
 
-public abstract class User extends Person {
+public abstract class User{
     private String username;
     private String password;
 
     public User(String name, String username, String password) {
-        super(name);
         this.username = username;
         this.password = password;
     }

@@ -9,15 +9,15 @@
 
 <AnchorPane prefHeight="420.0" prefWidth="666.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qu4lizz.escape_room.controller.SignInController">
    <children>
-      <Label alignment="CENTER" layoutX="139.0" layoutY="44.0" prefHeight="48.0" prefWidth="388.0" text="Escape Room System" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="139.0" layoutY="44.0" prefHeight="48.0" prefWidth="388.0" text="Escape Room System" textAlignment="CENTER" AnchorPane.leftAnchor="139.0" AnchorPane.rightAnchor="138.02481134467973" AnchorPane.topAnchor="44.0">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="233.0" layoutY="126.0" prefHeight="24.0" prefWidth="172.0" text="Username" textAlignment="CENTER" />
-      <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="202.0" layoutY="155.0" prefHeight="41.0" prefWidth="235.0" />
-      <Label alignment="CENTER" layoutX="232.0" layoutY="207.0" prefHeight="24.0" prefWidth="172.0" text="Password" textAlignment="CENTER" />
-      <Button layoutX="233.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#signInMouseClicked" prefHeight="63.0" prefWidth="173.0" stylesheets="@../css/main.css" text="Sign In" />
-      <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="202.0" layoutY="236.0" prefHeight="41.0" prefWidth="235.0" />
+      <Label alignment="CENTER" layoutX="233.0" layoutY="126.0" prefHeight="24.0" prefWidth="172.0" text="Username" textAlignment="CENTER" AnchorPane.bottomAnchor="265.0762039205018" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="260.45459580161435" />
+      <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="202.0" layoutY="155.0" prefHeight="41.0" prefWidth="235.0" AnchorPane.bottomAnchor="224.10773657726122" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="228.6201422496011" />
+      <Label alignment="CENTER" layoutX="232.0" layoutY="207.0" prefHeight="24.0" prefWidth="172.0" text="Password" textAlignment="CENTER" AnchorPane.bottomAnchor="184.07620392050183" AnchorPane.leftAnchor="232.0" AnchorPane.rightAnchor="261.45459580161435" />
+      <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="202.0" layoutY="236.0" prefHeight="41.0" prefWidth="235.0" AnchorPane.bottomAnchor="143.10773657726122" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="228.6201422496011" />
+      <Button layoutX="233.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#signInMouseClicked" prefHeight="63.0" prefWidth="173.0" stylesheets="@../css/main.css" text="Sign In" AnchorPane.bottomAnchor="49.10773657726121" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="259.45722352301095" />
    </children>
 </AnchorPane>

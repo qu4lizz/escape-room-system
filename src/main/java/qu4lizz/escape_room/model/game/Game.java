@@ -38,10 +38,6 @@ public class Game {
         return score;
     }
 
-    public String getTeam() {
-        return teamName;
-    }
-
     public String getRoomId() {
         return roomId;
     }

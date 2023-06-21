@@ -52,7 +52,6 @@ public class GameDataAccessImpl implements GameDataAccess {
         return retVal;
     }
 
-    // TODO: FETCH PAYMENT, LOGS AND REVIEW
     @Override
     public List<Game> getGames() {
         List<Game> retVal = new ArrayList<>();
@@ -68,13 +67,13 @@ public class GameDataAccessImpl implements GameDataAccess {
             rs = ps.executeQuery();
 
             while (rs.next())
-                retVal.add(new Game(rs.getString(1),
-                                    rs.getTimestamp(2),
-                                    rs.getTimestamp(3),
-                                    rs.getLong(4),
-                                    rs.getString(5),
-                                    rs.getString(6),
-                                    rs.getBigDecimal(7)));
+                retVal.add(new Game(rs.getString("Room_name"),
+                                    rs.getTimestamp("startDate"),
+                                    rs.getTimestamp("endDate"),
+                                    rs.getLong("score"),
+                                    rs.getString("Team_name"),
+                                    rs.getString("GameMaster_User_username"),
+                                    rs.getBigDecimal("price")));
         } catch (SQLException e) {
             e.printStackTrace();
             SQLUtil.getInstance().showSQLException(e);
@@ -102,13 +101,13 @@ public class GameDataAccessImpl implements GameDataAccess {
             rs = ps.executeQuery();
 
             while (rs.next())
-                retVal.add(new Game(rs.getString(1),
-                                    rs.getTimestamp(2),
-                                    rs.getTimestamp(3),
-                                    rs.getLong(4),
-                                    rs.getString(5),
-                                    rs.getString(6),
-                                    rs.getBigDecimal(7)));
+                retVal.add(new Game(rs.getString("Room_name"),
+                                    rs.getTimestamp("startDate"),
+                                    rs.getTimestamp("endDate"),
+                                    rs.getLong("score"),
+                                    rs.getString("Team_name"),
+                                    rs.getString("GameMaster_User_username"),
+                                    rs.getBigDecimal("price")));
         } catch (SQLException e) {
             e.printStackTrace();
             SQLUtil.getInstance().showSQLException(e);

@@ -29,9 +29,9 @@ public class Utils {
         List<Game> sortedGamesByScore = games.stream().sorted(Comparator.comparing(Game::getScore)).toList();
         List<GameWrapper> wrapper = new ArrayList<>();
 
-        for (int i = 1; i < sortedGamesByScore.size(); i++) {
+        for (int i = 0; i < sortedGamesByScore.size(); i++) {
             Game game = sortedGamesByScore.get(i);
-            GameWrapper gameWrapper = new GameWrapper(game, i);
+            GameWrapper gameWrapper = new GameWrapper(game, i+1);
             wrapper.add(gameWrapper);
         }
 

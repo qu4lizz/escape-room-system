@@ -17,13 +17,13 @@ public class SQLUtil {
     private SQLUtil() { }
 
 
-    public static String signIn(String username, String password) throws Exception {
+    public static String signIn(String username, String password) {
         Connection conn = null;
         CallableStatement cs = null;
         boolean loginSuccessful;
-        int userId;
+        String type;
 
-        String callStatement = "{call prijava(?, ?, ?, ?)}";
+        String callStatement = "{call login(?, ?, ?, ?)}";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -31,19 +31,24 @@ public class SQLUtil {
             cs.setString(1, username);
             cs.setString(2, password);
             cs.registerOutParameter(3, Types.BOOLEAN);
-            cs.registerOutParameter(4, Types.INTEGER);
+            cs.registerOutParameter(4, Types.VARCHAR);
 
             cs.executeUpdate();
 
             loginSuccessful = cs.getBoolean(3);
-            userId = cs.getInt(4);
+            type = cs.getString(4);
 
-            return loginSuccessful + "#" + userId;
+            return loginSuccessful + "#" + type;
 
-        } finally {
+        }
+        catch (SQLException e) {
+            SQLUtil.getInstance().showSQLException(e);
+        }
+        finally {
             ConnectionPool.getInstance().checkIn(conn);
             SQLUtil.getInstance().close(cs);
         }
+        return null;
     }
 
 
