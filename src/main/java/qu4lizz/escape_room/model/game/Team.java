@@ -49,4 +49,9 @@ public class Team {
         Team team = (Team) obj;
         return team.name.equals(this.name);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

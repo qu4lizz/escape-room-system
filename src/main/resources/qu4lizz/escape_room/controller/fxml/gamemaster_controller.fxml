@@ -109,9 +109,9 @@
       </AnchorPane>
       <AnchorPane fx:id="startNewGamePane" layoutX="231.0" layoutY="10.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button layoutX="380.0" layoutY="547.0" mnemonicParsing="false" onMouseClicked="#startGameOnMouseClicked" prefHeight="65.0" prefWidth="209.0" text="Start game" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="379.5518214932891" />
-            <ChoiceBox fx:id="chooseReservationChoiceBox" layoutX="339.0" layoutY="131.0" prefHeight="55.0" prefWidth="290.0" AnchorPane.leftAnchor="339.0" AnchorPane.rightAnchor="339.76466692641486" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="85.0" prefHeight="36.0" prefWidth="240.0" text="Choose reservation" textAlignment="CENTER" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="364.6332808565842" />
+            <ChoiceBox fx:id="chooseReservationChoiceBox" layoutX="234.0" layoutY="131.0" prefHeight="51.0" prefWidth="500.0" AnchorPane.leftAnchor="234.0" AnchorPane.rightAnchor="235.0" />
+            <Button layoutX="380.0" layoutY="547.0" mnemonicParsing="false" onMouseClicked="#startGameOnMouseClicked" prefHeight="65.0" prefWidth="209.0" text="Start game" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="379.5518214932891" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="newGameControlPane" layoutX="231.0" layoutY="20.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -138,23 +138,23 @@
          <children>
             <Button layoutX="300.0" layoutY="259.0" mnemonicParsing="false" onMouseClicked="#addRoomOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="ADD ROOM" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.9696291953508" />
             <Button layoutX="300.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#deleteRoomOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="DELETE ROOM" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.9696291953508" />
-            <Button layoutX="300.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#modifyRoomOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="MODIFY ROOM" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.9696291953508" />
-            <Button layoutX="300.0" layoutY="503.0" mnemonicParsing="false" onMouseClicked="#roomsListOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="ROOMS LIST" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.9696291953508" />
+            <Button disable="true" layoutX="300.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#modifyRoomOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="MODIFY ROOM" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.9696291953508" />
+            <Button disable="true" layoutX="300.0" layoutY="503.0" mnemonicParsing="false" onMouseClicked="#roomsListOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="ROOMS LIST" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.9696291953508" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="addRoomPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="33.0" prefHeight="41.0" prefWidth="192.0" text="Room name" textAlignment="CENTER" />
-            <TextField fx:id="roomNameTextField" layoutX="364.0" layoutY="75.0" prefHeight="41.0" prefWidth="240.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="116.0" prefHeight="41.0" prefWidth="192.0" text="Maximum players" textAlignment="CENTER" />
-            <TextField fx:id="maximumPlayersTextField" layoutX="364.0" layoutY="158.0" prefHeight="41.0" prefWidth="240.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="199.0" prefHeight="41.0" prefWidth="192.0" text="Duration (min)" textAlignment="CENTER" />
-            <TextField fx:id="durationTextField" layoutX="364.0" layoutY="241.0" prefHeight="41.0" prefWidth="240.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="386.0" layoutY="376.0" prefHeight="41.0" prefWidth="192.0" text="Choose quests" textAlignment="CENTER" />
-            <ListView fx:id="questsNewRoomListView" layoutX="274.0" layoutY="418.0" prefHeight="266.0" prefWidth="418.0" />
-            <Button layoutX="379.0" layoutY="721.0" mnemonicParsing="false" onMouseClicked="#createNewRoomOnMouseClicked" prefHeight="41.0" prefWidth="209.0" text="Create new room" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="282.0" prefHeight="41.0" prefWidth="192.0" text="Price" textAlignment="CENTER" />
-            <TextField fx:id="priceTextField" layoutX="364.0" layoutY="324.0" prefHeight="41.0" prefWidth="240.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="33.0" prefHeight="41.0" prefWidth="192.0" text="Room name" textAlignment="CENTER" AnchorPane.leftAnchor="388.0" AnchorPane.rightAnchor="388.50715022954665" />
+            <TextField fx:id="roomNameTextField" layoutX="364.0" layoutY="75.0" prefHeight="41.0" prefWidth="240.0" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="364.6332808565842" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="116.0" prefHeight="41.0" prefWidth="192.0" text="Maximum players" textAlignment="CENTER" AnchorPane.leftAnchor="388.0" AnchorPane.rightAnchor="388.50715022954665" />
+            <TextField fx:id="maximumPlayersTextField" layoutX="364.0" layoutY="158.0" prefHeight="41.0" prefWidth="240.0" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="364.6332808565842" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="199.0" prefHeight="41.0" prefWidth="192.0" text="Duration (min)" textAlignment="CENTER" AnchorPane.leftAnchor="388.0" AnchorPane.rightAnchor="388.50715022954665" />
+            <TextField fx:id="durationTextField" layoutX="364.0" layoutY="241.0" prefHeight="41.0" prefWidth="240.0" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="364.6332808565842" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="282.0" prefHeight="41.0" prefWidth="192.0" text="Price" textAlignment="CENTER" AnchorPane.leftAnchor="388.0" AnchorPane.rightAnchor="388.50715022954665" />
+            <TextField fx:id="priceTextField" layoutX="364.0" layoutY="324.0" prefHeight="41.0" prefWidth="240.0" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="364.6332808565842" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="386.0" layoutY="376.0" prefHeight="41.0" prefWidth="192.0" text="Choose quests" textAlignment="CENTER" AnchorPane.leftAnchor="388.0" AnchorPane.rightAnchor="388.50715022954665" />
+            <ListView fx:id="questsNewRoomListView" layoutX="274.0" layoutY="418.0" prefHeight="266.0" prefWidth="418.0" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="276.10364298657817" />
+            <Button layoutX="379.0" layoutY="721.0" mnemonicParsing="false" onMouseClicked="#createNewRoomOnMouseClicked" prefHeight="41.0" prefWidth="209.0" text="Create new room" AnchorPane.leftAnchor="379.0" AnchorPane.rightAnchor="380.5518214932891" />
          </children></AnchorPane>
       <AnchorPane fx:id="deleteRoomPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -165,26 +165,26 @@
       <AnchorPane fx:id="reservationsViewPane" layoutX="231.0" layoutY="20.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button layoutX="300.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#addReservationOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="ADD RESERVATION" />
-            <Button layoutX="300.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#modifyReservationOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="MODIFY RESERVATION" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.96962919535076" />
+            <Button disable="true" layoutX="300.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#modifyReservationOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="MODIFY RESERVATION" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.96962919535076" />
             <Button layoutX="300.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#removeReservationOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="REMOVE RESERVATION" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.96962919535076" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="addReservationPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="76.0" prefHeight="29.0" prefWidth="240.0" text="Choose room" />
-            <ChoiceBox fx:id="chooseRoomForReservationChoiceBox" layoutX="379.0" layoutY="106.0" prefHeight="36.0" prefWidth="209.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="213.0" prefHeight="29.0" prefWidth="240.0" text="Choose team" />
-            <ChoiceBox fx:id="chooseTeamForReservationChoiceBox" layoutX="379.0" layoutY="243.0" prefHeight="36.0" prefWidth="209.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="354.0" prefHeight="29.0" prefWidth="240.0" text="Choose date" />
-            <DatePicker fx:id="reservationDatePicker" layoutX="366.0" layoutY="384.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="363.0" layoutY="511.0" prefHeight="29.0" prefWidth="240.0" text="Choose time" />
-            <TextField fx:id="chooseTimeForReservationTextField" alignment="CENTER" layoutX="375.0" layoutY="541.0" promptText="hh:mm" />
-            <Button layoutX="395.0" layoutY="666.0" mnemonicParsing="false" onMouseClicked="#addNewReservationOnMouseClicked" prefHeight="41.0" prefWidth="178.0" text="Add reservation" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="76.0" prefHeight="29.0" prefWidth="240.0" text="Choose room" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="364.6332808565842" />
+            <ChoiceBox fx:id="chooseRoomForReservationChoiceBox" layoutX="355.0" layoutY="106.0" prefHeight="37.0" prefWidth="257.0" AnchorPane.leftAnchor="355.0" AnchorPane.rightAnchor="357.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="213.0" prefHeight="29.0" prefWidth="240.0" text="Choose team" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="364.6332808565842" />
+            <ChoiceBox fx:id="chooseTeamForReservationChoiceBox" layoutX="360.0" layoutY="243.0" prefHeight="40.0" prefWidth="250.0" AnchorPane.leftAnchor="360.0" AnchorPane.rightAnchor="359.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="354.0" prefHeight="29.0" prefWidth="240.0" text="Choose date" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="364.6332808565842" />
+            <DatePicker fx:id="reservationDatePicker" layoutX="366.0" layoutY="384.0" AnchorPane.leftAnchor="366.0" AnchorPane.rightAnchor="365.6253976923943" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="363.0" layoutY="511.0" prefHeight="29.0" prefWidth="240.0" text="Choose time" AnchorPane.leftAnchor="363.0" AnchorPane.rightAnchor="365.6332808565842" />
+            <TextField fx:id="chooseTimeForReservationTextField" alignment="CENTER" layoutX="375.0" layoutY="541.0" promptText="hh:mm" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="377.5702155430654" />
+            <Button layoutX="395.0" layoutY="666.0" mnemonicParsing="false" onMouseClicked="#addNewReservationOnMouseClicked" prefHeight="41.0" prefWidth="178.0" text="Add reservation" AnchorPane.leftAnchor="395.0" AnchorPane.rightAnchor="395.47036212999404" />
          </children></AnchorPane>
       <AnchorPane fx:id="deleteReservationPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ListView fx:id="reservationsListView" layoutX="58.0" layoutY="31.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="35.0" />
-            <Button layoutX="396.0" layoutY="721.0" mnemonicParsing="false" onMouseClicked="#deleteChosenReservationOnMouseClicked" prefHeight="41.0" prefWidth="176.0" text="Delete reservation" AnchorPane.bottomAnchor="40.99242085298634" AnchorPane.leftAnchor="396.0" AnchorPane.rightAnchor="396.4651066872008" />
+            <Button layoutX="377.0" layoutY="718.0" mnemonicParsing="false" onMouseClicked="#deleteChosenReservationOnMouseClicked" prefHeight="41.0" prefWidth="216.0" text="Delete reservation" AnchorPane.bottomAnchor="41.10773657726122" AnchorPane.leftAnchor="377.0" AnchorPane.rightAnchor="376.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="scoreboardViewPane" layoutX="231.0" layoutY="30.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -204,33 +204,47 @@
          <children>
             <Button layoutX="300.0" layoutY="259.0" mnemonicParsing="false" onMouseClicked="#addQuestOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="ADD QUEST" />
             <Button layoutX="300.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#deleteQuestOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="DELETE QUEST" />
-            <Button layoutX="300.0" layoutY="425.0" mnemonicParsing="false" onMouseClicked="#modifyQuestOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="MODIFY QUEST" />
+            <Button disable="true" layoutX="300.0" layoutY="425.0" mnemonicParsing="false" onMouseClicked="#modifyQuestOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="MODIFY QUEST" />
             <Button layoutX="300.0" layoutY="504.0" mnemonicParsing="false" onMouseClicked="#questsListOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="QUESTS LIST" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="addQuestPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label alignment="CENTER" layoutX="404.0" layoutY="27.0" prefHeight="30.0" prefWidth="160.0" text="Type" textAlignment="CENTER" />
-            <ChoiceBox fx:id="typeChoiceBox" layoutX="395.0" layoutY="58.0" prefHeight="33.0" prefWidth="177.0" />
+            <ChoiceBox fx:id="typeChoiceBox" layoutX="393.0" layoutY="58.0" prefHeight="33.0" prefWidth="177.0" AnchorPane.leftAnchor="393.0" AnchorPane.rightAnchor="398.4677344085974" />
             <Label alignment="CENTER" layoutX="405.0" layoutY="125.0" prefHeight="42.0" prefWidth="159.0" text="Name" textAlignment="CENTER" />
-            <TextField fx:id="nameOfQuestTextField" layoutX="376.0" layoutY="168.0" />
+            <TextField fx:id="nameOfQuestTextField" layoutX="340.0" layoutY="168.0" prefHeight="41.0" prefWidth="290.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="339.0" />
             <Label alignment="CENTER" layoutX="403.0" layoutY="223.0" prefHeight="42.0" prefWidth="159.0" text="Solution" textAlignment="CENTER" />
-            <TextField fx:id="solutionOfQuestTextField" layoutX="220.0" layoutY="266.0" prefHeight="41.0" prefWidth="529.0" />
-            <AnchorPane fx:id="addPuzzlePane" layoutX="298.0" layoutY="474.0" prefHeight="187.0" prefWidth="368.0">
+            <TextField fx:id="solutionOfQuestTextField" layoutX="219.0" layoutY="266.0" prefHeight="41.0" prefWidth="529.0" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="220.39532006160243" />
+            <Label alignment="CENTER" layoutX="403.0" layoutY="317.0" prefHeight="42.0" prefWidth="159.0" text="Inventory" textAlignment="CENTER" />
+            <ChoiceBox fx:id="inventoryChoiceBox" layoutX="396.0" layoutY="360.0" prefHeight="33.0" prefWidth="177.0" AnchorPane.leftAnchor="396.0" AnchorPane.rightAnchor="395.4677344085974" />
+            <AnchorPane fx:id="addPuzzlePane" layoutX="293.0" layoutY="475.0" prefHeight="188.0" prefWidth="385.0" AnchorPane.leftAnchor="293.0" AnchorPane.rightAnchor="291.0">
                <children>
                   <Label alignment="CENTER" layoutX="104.0" layoutY="14.0" prefHeight="42.0" prefWidth="159.0" text="Difficulty" textAlignment="CENTER" />
                   <ChoiceBox fx:id="difficultyChoiceBox" layoutX="95.0" layoutY="57.0" prefHeight="33.0" prefWidth="177.0" />
                </children>
             </AnchorPane>
-            <Button layoutX="376.0" layoutY="685.0" mnemonicParsing="false" onMouseClicked="#createNewQuestOnMouseClicked" prefHeight="41.0" prefWidth="216.0" text="Create new quest" />
-            <Label alignment="CENTER" layoutX="403.0" layoutY="317.0" prefHeight="42.0" prefWidth="159.0" text="Inventory" textAlignment="CENTER" />
-            <ChoiceBox fx:id="inventoryChoiceBox" layoutX="396.0" layoutY="360.0" prefHeight="33.0" prefWidth="177.0" />
+            <Button layoutX="376.0" layoutY="685.0" mnemonicParsing="false" onMouseClicked="#createNewQuestOnMouseClicked" prefHeight="41.0" prefWidth="216.0" text="Create new quest" AnchorPane.leftAnchor="376.0" AnchorPane.rightAnchor="376.5702155430654" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="deleteQuestPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ListView fx:id="questsListView" layoutX="98.0" layoutY="38.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="35.0" />
             <Button layoutX="406.0" layoutY="718.0" mnemonicParsing="false" onMouseClicked="#deleteChosenQuestOnMouseClicked" prefHeight="41.0" prefWidth="157.0" text="Delete quest" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="questListPane" layoutX="231.0" prefHeight="800.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TableView fx:id="questTableView" editable="true" layoutX="76.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="35.0">
+              <columns>
+                <TableColumn fx:id="questIdTableColumn" prefWidth="66.82391357421875" text="Id" />
+                <TableColumn fx:id="questNameTableColumn" prefWidth="200.0" text="Name" />
+                  <TableColumn fx:id="questSolutionTableColumn" prefWidth="150.0" text="Solution" />
+                  <TableColumn fx:id="questInventoryTableColumn" prefWidth="170.0" text="Inventory" />
+                  <TableColumn fx:id="questRoomTableColumn" prefWidth="200.0" text="Room" />
+                  <TableColumn fx:id="questTypeTableColumn" prefWidth="109.0811767578125" text="Type" />
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </children>

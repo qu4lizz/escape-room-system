@@ -27,10 +27,6 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{" +
-                "roomId='" + roomId + '\'' +
-                ", teamName='" + teamName + '\'' +
-                ", startTime=" + startTime +
-                '}';
+        return startTime.toString() + "  |  " + roomId + "  |  " + teamName;
     }
 }

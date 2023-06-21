@@ -12,5 +12,7 @@ public interface GeneralDataAccess {
 
     List<Team> getTeams();
 
+    Team getTeamByName(String name);
+
     List<Inventory> getInventories();
 }

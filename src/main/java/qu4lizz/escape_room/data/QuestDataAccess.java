@@ -7,7 +7,12 @@ import java.util.List;
 public interface QuestDataAccess {
     boolean addQuest(Quest quest);
     List<Quest> getQuests();
-    boolean updateQuest(int questId);
+    boolean modifyQuest(int questId);
     boolean deleteQuest(int questId);
+
+    List<Quest> getAvailableQuests();
+
     List<Quest> getQuestsForRoom(String roomName);
+
+    boolean switchQuestPlace(Integer inventoryId, String roomName, int questId);
 }

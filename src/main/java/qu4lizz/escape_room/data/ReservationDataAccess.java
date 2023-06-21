@@ -9,4 +9,6 @@ public interface ReservationDataAccess {
     boolean updateReservation(Reservation reservation);
     boolean deleteReservation(Reservation reservation);
     List<Reservation> getReservations();
+
+    List<Reservation> getActiveReservations();
 }

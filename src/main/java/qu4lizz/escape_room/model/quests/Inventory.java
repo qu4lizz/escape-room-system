@@ -13,6 +13,7 @@ public class Inventory {
 
     public Inventory(int id, String location) {
         this.location = location;
+        this.id = id;
     }
 
     public Inventory(int id, String location, HashSet<Quest> quests) {
@@ -39,5 +40,10 @@ public class Inventory {
 
     public HashSet<Quest> getQuests() {
         return quests;
+    }
+
+    @Override
+    public String toString() {
+        return id + ": " + location;
     }
 }

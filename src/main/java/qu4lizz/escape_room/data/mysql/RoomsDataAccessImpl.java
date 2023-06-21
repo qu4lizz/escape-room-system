@@ -14,19 +14,20 @@ public class RoomsDataAccessImpl implements RoomsDataAccess {
     public boolean addRoom(Room room) {
         boolean retVal = false;
         Connection conn = null;
-        CallableStatement cs = null;
+        PreparedStatement stmt = null;
 
-        String query = "{call addRoom(?,?,?,?)}";
+        String query = "INSERT INTO Room (name, maxPlayers, duration, price) VALUES (?, ?, ?, ?)";
+
         try {
             conn = ConnectionPool.getInstance().checkOut();
-            cs = conn.prepareCall(query);
+            stmt = conn.prepareStatement(query);
 
-            cs.setString(1, room.getName());
-            cs.setInt(2, room.getMaxPlayers());
-            cs.setTime(3, room.getDuration());
-            cs.setBigDecimal(4, room.getPrice());
+            stmt.setString(1, room.getName());
+            stmt.setInt(2, room.getMaxPlayers());
+            stmt.setTime(3, room.getDuration());
+            stmt.setBigDecimal(4, room.getPrice());
 
-            retVal = cs.executeUpdate() == 1;
+            retVal = stmt.executeUpdate() == 1;
 
             if (!retVal)
                 SQLUtil.getInstance().showErrorMessage();
@@ -35,7 +36,7 @@ public class RoomsDataAccessImpl implements RoomsDataAccess {
             SQLUtil.getInstance().showSQLException(e);
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
-            SQLUtil.getInstance().close(cs);
+            SQLUtil.getInstance().close(stmt);
         }
         return retVal;
     }
@@ -49,21 +50,21 @@ public class RoomsDataAccessImpl implements RoomsDataAccess {
     public boolean deleteRoom(String roomName) {
         boolean retVal = false;
         Connection connection = null;
-        CallableStatement callableStatement = null;
-        ResultSet rs = null;
-        String callStatementItem = "{call deleteRoom(?)}";
+        PreparedStatement ps = null;
+        String query = "DELETE FROM Room WHERE name = ?";
 
         try {
             connection = ConnectionPool.getInstance().checkOut();
-            callableStatement = connection.prepareCall(callStatementItem);
-            callableStatement.setString(1, roomName);
-
-            retVal = callableStatement.executeUpdate() == 1;
+            ps = connection.prepareStatement(query);
+            ps.setString(1, roomName);
+            retVal = ps.executeUpdate() == 1;
+            if (!retVal)
+                SQLUtil.getInstance().showErrorMessage();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             ConnectionPool.getInstance().checkIn(connection);
-            SQLUtil.getInstance().close(callableStatement);
+            SQLUtil.getInstance().close(ps);
         }
         return retVal;
     }
@@ -72,15 +73,14 @@ public class RoomsDataAccessImpl implements RoomsDataAccess {
     public List<Room> getRooms() {
         List<Room> retVal = new ArrayList<>();
         Connection conn = null;
-        PreparedStatement ps = null;
+        Statement stmt = null;
         ResultSet rs = null;
 
-        String query =    "SELECT * "
-                        + "FROM Room";
+        String query = "SELECT * FROM Room";
         try {
             conn = ConnectionPool.getInstance().checkOut();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
 
             while (rs.next())
                 retVal.add(new Room(rs.getString("name"),
@@ -92,7 +92,7 @@ public class RoomsDataAccessImpl implements RoomsDataAccess {
             SQLUtil.getInstance().showSQLException(e);
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
-            SQLUtil.getInstance().close(ps, rs);
+            SQLUtil.getInstance().close(stmt, rs);
         }
         return retVal;
     }
@@ -105,17 +105,19 @@ public class RoomsDataAccessImpl implements RoomsDataAccess {
         ResultSet rs = null;
 
         String query =    "SELECT * "
-                        + "FROM Room"
-                        + "WHERE name='" + roomName + "';";
+                        + "FROM Room "
+                        + "WHERE name = ?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
+            ps.setString(1, roomName);
             rs = ps.executeQuery();
 
-            retVal =   new Room(rs.getString("name"),
-                                rs.getInt("maxPlayers"),
-                                rs.getTime("duration"),
-                                rs.getBigDecimal("price"));
+            if (rs.next())
+                retVal =   new Room(rs.getString("name"),
+                                    rs.getInt("maxPlayers"),
+                                    rs.getTime("duration"),
+                                    rs.getBigDecimal("price"));
         } catch (SQLException e) {
             e.printStackTrace();
             SQLUtil.getInstance().showSQLException(e);

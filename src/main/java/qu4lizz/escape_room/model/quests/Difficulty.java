@@ -5,5 +5,5 @@ public enum Difficulty {
     INTERMEDIATE,
     ADVANCED,
     EXPERT,
-    MASTER
+    MASTER;
 }

@@ -14,18 +14,18 @@ public class ReservationDataAccessImpl implements ReservationDataAccess {
     public boolean addReservation(Reservation reservation) {
         boolean retVal = false;
         Connection conn = null;
-        CallableStatement cs = null;
+        PreparedStatement ps = null;
 
-        String query = "{call addReservation(?,?,?)}";
+        String query = "INSERT INTO Reservation (startDate, Room_name, Team_name) VALUES (?, ?, ?)";
         try {
             conn = ConnectionPool.getInstance().checkOut();
-            cs = conn.prepareCall(query);
+            ps = conn.prepareStatement(query);
 
-            cs.setString(1, reservation.getRoom());
-            cs.setString(2, reservation.getTeam());
-            cs.setTimestamp(3, reservation.getStartTime());
+            ps.setTimestamp(1, reservation.getStartTime());
+            ps.setString(2, reservation.getRoom());
+            ps.setString(3, reservation.getTeam());
 
-            retVal = cs.executeUpdate() == 1;
+            retVal = ps.executeUpdate() == 1;
 
             if (!retVal)
                 SQLUtil.getInstance().showErrorMessage();
@@ -34,7 +34,7 @@ public class ReservationDataAccessImpl implements ReservationDataAccess {
             SQLUtil.getInstance().showSQLException(e);
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
-            SQLUtil.getInstance().close(cs);
+            SQLUtil.getInstance().close(ps);
         }
         return retVal;
     }
@@ -48,21 +48,22 @@ public class ReservationDataAccessImpl implements ReservationDataAccess {
     public boolean deleteReservation(Reservation reservation) {
         boolean retVal = false;
         Connection connection = null;
-        CallableStatement callableStatement = null;
-        ResultSet rs = null;
-        String callStatementItem = "{call deleteQuest(?,?)}";
+        PreparedStatement ps = null;
 
+        String query = "DELETE FROM Reservation WHERE Room_name = ? AND startDate = ?";
         try {
             connection = ConnectionPool.getInstance().checkOut();
-            callableStatement = connection.prepareCall(callStatementItem);
-            callableStatement.setString(1, reservation.getRoom());
-            callableStatement.setTimestamp(2, reservation.getStartTime());
-            retVal = callableStatement.executeUpdate() == 1;
+            ps = connection.prepareStatement(query);
+
+            ps.setString(1, reservation.getRoom());
+            ps.setTimestamp(2, reservation.getStartTime());
+
+            retVal = ps.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             ConnectionPool.getInstance().checkIn(connection);
-            SQLUtil.getInstance().close(callableStatement);
+            SQLUtil.getInstance().close(ps);
         }
         return retVal;
     }
@@ -71,24 +72,48 @@ public class ReservationDataAccessImpl implements ReservationDataAccess {
     public List<Reservation> getReservations() {
         List<Reservation> retVal = new ArrayList<>();
         Connection conn = null;
-        PreparedStatement ps = null;
+        Statement stmt = null;
         ResultSet rs = null;
 
-        String query =    "SELECT * "
-                        + "FROM Reservation";
+        String query = "SELECT * FROM Reservation";
         try {
             conn = ConnectionPool.getInstance().checkOut();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
 
             while (rs.next())
-                retVal.add(new Reservation(rs.getString(1), rs.getString(2), rs.getTimestamp(3)));
+                retVal.add(new Reservation(rs.getString("Room_name"), rs.getString("Team_name"), rs.getTimestamp("startDate")));
         } catch (SQLException e) {
             e.printStackTrace();
             SQLUtil.getInstance().showSQLException(e);
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
-            SQLUtil.getInstance().close(ps, rs);
+            SQLUtil.getInstance().close(stmt, rs);
+        }
+        return retVal;
+    }
+
+    @Override
+    public List<Reservation> getActiveReservations() {
+        List<Reservation> retVal = new ArrayList<>();
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM Reservation WHERE startDate > NOW() - INTERVAL 60 MINUTE";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+
+            while (rs.next())
+                retVal.add(new Reservation(rs.getString("Room_name"), rs.getString("Team_name"), rs.getTimestamp("startDate")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            SQLUtil.getInstance().showSQLException(e);
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            SQLUtil.getInstance().close(stmt, rs);
         }
         return retVal;
     }

@@ -1,13 +1,10 @@
 package qu4lizz.escape_room.controller;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -88,7 +85,7 @@ public class GameMasterController implements Initializable {
     @FXML
     void startNewGameOnMouseClicked(MouseEvent event) {
         setActivePane(gamesPane, startNewGamePane);
-        List<Reservation> reservations = reservationDataAccess.getReservations();
+        List<Reservation> reservations = reservationDataAccess.getActiveReservations();
         chooseReservationChoiceBox.getItems().clear();
         chooseReservationChoiceBox.getItems().addAll(reservations);
     }
@@ -105,10 +102,10 @@ public class GameMasterController implements Initializable {
     void startGameOnMouseClicked(MouseEvent event) {
         reservation = chooseReservationChoiceBox.getValue();
         gameLog = new GameLog();
-        List<Quest> quests = questDataAccess.getQuests();
+        List<Quest> quests = questDataAccess.getQuestsForRoom(reservation.getRoom());
         gameLogListView.getItems().clear();
         for (var quest : quests) {
-            gameLog.add(quest.toString());
+            gameLogListView.getItems().add(quest.getName());
         }
         setActivePane(gamesPane, newGameControlPane);
     }
@@ -119,26 +116,34 @@ public class GameMasterController implements Initializable {
     @FXML
     private VBox vboxReviews;
     @FXML
-    void endGameOnMouseClicked(MouseEvent event) { // TODO: time left?
+    void endGameOnMouseClicked(MouseEvent event) {
         gameLog.add("GAME ENDED");
+        Room room = roomsDataAccess.getRoom(reservation.getRoom());
+        LocalDateTime startTime = reservation.getStartTime().toLocalDateTime();
+        LocalTime duration = room.getDuration().toLocalTime();
+        LocalDateTime endTimeLDT = startTime.plus(Duration.between(LocalTime.MIN, duration));
+
+        endTime = Timestamp.valueOf(endTimeLDT);
+        score = Long.MAX_VALUE;
         initVBox();
     }
+    private Timestamp endTime;
+    private long score;
     @FXML
     void addGameAfterFinishOnMouseClicked(MouseEvent event) {
-        Timestamp startTime = reservation.getStartTime();
-        Timestamp endTime = new Timestamp(System.currentTimeMillis());
-        long score = Duration.between(startTime.toLocalDateTime(), endTime.toLocalDateTime()).getSeconds();
         Room room = roomsDataAccess.getRoom(reservation.getRoom());
+        Team team = generalDataAccess.getTeamByName(reservation.getTeam());
         BigDecimal price = room.getPrice().multiply(BigDecimal.valueOf(team.getPlayers().length));
 
-        Game game = new Game(room.getName(), startTime, endTime, score, reservation.getTeam(),
+        Game game = new Game(room.getName(), reservation.getStartTime(), endTime, score, reservation.getTeam(),
                 SignInController.username, price);
 
         for (var elem : reviewFields.entrySet()) {
-            // TODO: check if text is not empty
             GameReview review = new GameReview(elem.getKey(), elem.getValue().getText());
             game.addReview(review);
         }
+
+        game.setGameLog(gameLog);
 
         gameDataAccess.addGame(game);
 
@@ -182,7 +187,7 @@ public class GameMasterController implements Initializable {
     @FXML
     void addRoomOnMouseClicked(MouseEvent event) {
         setActivePane(roomsPane, addRoomPane);
-        List<Quest> quests = questDataAccess.getQuests();
+        List<Quest> quests = questDataAccess.getAvailableQuests();
         questsNewRoomListView.getItems().clear();
         questsNewRoomListView.getItems().addAll(quests);
     }
@@ -200,14 +205,18 @@ public class GameMasterController implements Initializable {
     private ListView<Quest> questsNewRoomListView;
     @FXML
     void createNewRoomOnMouseClicked(MouseEvent event) {
+        // TODO: check if all fields are filled
+
         String name = roomNameTextField.getText();
         int maximumPlayers = Integer.parseInt(maximumPlayersTextField.getText());
-        Time duration = Time.valueOf(durationTextField.getText());
+        Time duration = Time.valueOf("00:" + durationTextField.getText() + ":00");
         BigDecimal price = BigDecimal.valueOf(Double.parseDouble(priceTextField.getText()));
-        // TODO: check if all fields are filled
         List<Quest> quests = questsNewRoomListView.getSelectionModel().getSelectedItems();
         Room room = new Room(name, maximumPlayers, duration, price, new HashSet<>(quests));
         roomsDataAccess.addRoom(room);
+        for (var quest : quests) {
+            questDataAccess.switchQuestPlace(null, name, quest.getId());
+        }
         setActivePane(roomsPane, roomsViewPane);
     }
     // Delete room button and pane
@@ -225,6 +234,12 @@ public class GameMasterController implements Initializable {
     @FXML
     void deleteChosenRoomOnMouseClicked(MouseEvent event) {
         Room room = deleteRoomsListView.getSelectionModel().getSelectedItem();
+        List<Quest> quests = questDataAccess.getQuestsForRoom(room.getName());
+        List<Inventory> inventories = generalDataAccess.getInventories();
+        for (var quest : quests) {
+            Inventory inventory = inventories.get(new Random().nextInt(inventories.size()));
+            questDataAccess.switchQuestPlace(inventory.getId(), null, quest.getId());
+        }
         roomsDataAccess.deleteRoom(room.getName());
         setActivePane(roomsPane, roomsViewPane);
     }
@@ -334,7 +349,7 @@ public class GameMasterController implements Initializable {
     }
     // Add quest button and pane
     String[] types = {"Puzzle", "Lock"};
-    String[] difficulties = {"Beginner", "Intermediate", "Advanced", "Expert", "Master"};
+    String[] difficulties = {"BEGINNER", "INTERMEDIATE", "ADVANCED", "EXPERT", "MASTER"};
     @FXML
     void addQuestOnMouseClicked(MouseEvent event) {
         setActivePane(questsPane, addQuestPane);
@@ -368,7 +383,7 @@ public class GameMasterController implements Initializable {
         String solution = solutionOfQuestTextField.getText();
         Inventory inventory = inventoryChoiceBox.getSelectionModel().getSelectedItem();
         String difficulty = difficultyChoiceBox.getSelectionModel().getSelectedItem();
-        Quest quest = null;
+        Quest quest;
         if (type.equals("Puzzle")) {
             quest = new Puzzle(name, solution, Difficulty.valueOf(difficulty), null, inventory.getId());
         }
@@ -376,6 +391,7 @@ public class GameMasterController implements Initializable {
             quest = new Lock(name, solution,  null, inventory.getId());
         }
         questDataAccess.addQuest(quest);
+        setActivePane(questsPane, questsViewPane);
     }
     // Delete quest button and pane
     @FXML
@@ -395,7 +411,33 @@ public class GameMasterController implements Initializable {
         questDataAccess.deleteQuest(quest.getId());
         questsListView.getItems().remove(quest);
     }
+    // Quest list button and pane
+    @FXML
+    void questsListOnMouseClicked(MouseEvent event) {
+        List<Quest> quests = questDataAccess.getQuests();
+        questTableView.getItems().clear();
+        questTableView.getItems().addAll(quests);
+        setActivePane(questsPane, questListPane);
+    }
+    @FXML
+    private AnchorPane questListPane;
+    @FXML
+    private TableView<Quest> questTableView;
+    @FXML
+    private TableColumn<Quest, Integer> questIdTableColumn;
+    @FXML
+    private TableColumn<Quest, String> questInventoryTableColumn;
+    @FXML
+    private TableColumn<Quest, String> questNameTableColumn;
+    @FXML
+    private TableColumn<Quest, String> questRoomTableColumn;
+    @FXML
+    private TableColumn<Quest, String> questSolutionTableColumn;
+    @FXML
+    private TableColumn<Quest, String> questTypeTableColumn;
 
+
+    // INITIALIZATION
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gameLogListView.setOnMouseClicked(click -> {
@@ -405,23 +447,27 @@ public class GameMasterController implements Initializable {
                 gameLogListView.getItems().remove(chosen);
                 if (gameLogListView.getItems().isEmpty()) {
                     gameLog.add("GAME FINISHED");
+                    endTime = new Timestamp(System.currentTimeMillis());
+                    Timestamp startTime = reservation.getStartTime();
+                    score = Duration.between(startTime.toLocalDateTime(), endTime.toLocalDateTime()).getSeconds();
                     initVBox();
                 }
 
             }
         });
-
+        // Payment pane
         pricePayment.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getPrice()));
         datePayment.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getStartTime()));
         roomPayment.setCellValueFactory(cellData -> Bindings.createObjectBinding(() ->cellData.getValue().getRoomId()));
-
+        // Rooms pane
         questsNewRoomListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
+        // Games pane
         roomNameGames.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getRoomId()));
         scoreGames.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getScore()));
         startTimeGames.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getStartTime()));
         teamNameGames.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getTeamName()));
 
+        // Sort games
         scoreboardRoomChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             scoreboard();
         });
@@ -430,16 +476,42 @@ public class GameMasterController implements Initializable {
         positionScoreboardTableColumn.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getPosition()));
         completedScoreboardTableColumn.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getFinished()));
 
-
+        // Sort scoreboard
         scoreboardTable.getSortOrder().add(positionScoreboardTableColumn);
         positionScoreboardTableColumn.setSortType(TableColumn.SortType.ASCENDING);
-
         scoreboardTable.sort();
-
+        // Quests
         typeChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            addPuzzlePane.setVisible(!newValue.equals("LOCK"));
+            addPuzzlePane.setVisible(!newValue.equals("Lock"));
         });
 
+        // Quest list table
+        questIdTableColumn.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getId()));
+        questInventoryTableColumn.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> {
+            int inventoryId = cellData.getValue().getInventoryId();
+            List<Inventory> inventories = generalDataAccess.getInventories();
+            Inventory inventory = inventories.stream().filter(i -> i.getId() == inventoryId).findFirst().orElse(null);
+            if (inventory != null) {
+                return inventory.getLocation();
+            }
+            else {
+                return "/";
+            }
+        }));
+        questNameTableColumn.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getName()));
+        questRoomTableColumn.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> {
+            String room = cellData.getValue().getRoomName();
+            return Objects.requireNonNullElse(room, "/");
+        }));
+        questSolutionTableColumn.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getSolution()));
+        questTypeTableColumn.setCellValueFactory(cellData -> Bindings.createObjectBinding(() -> {
+            if (cellData.getValue() instanceof Puzzle) {
+                return "Puzzle";
+            }
+            else {
+                return "Lock";
+            }
+        }));
     }
 
     private void scoreboard() {
@@ -454,11 +526,11 @@ public class GameMasterController implements Initializable {
     private void initVBox() {
         vboxReviews.getChildren().clear();
         List<HBox> reviews = new ArrayList<>();
-        List<Player> players = generalDataAccess.getPlayersFromTeam(team.getName());
+        List<Player> players = generalDataAccess.getPlayersFromTeam(reservation.getTeam());
 
         reviewFields.clear();
         for (var player : players) {
-            HBox hbox = createHBox(player.getName());
+            HBox hbox = createHBox(player.getEmail());
             reviews.add(hbox);
         }
         vboxReviews.getChildren().addAll(reviews);
@@ -515,6 +587,7 @@ public class GameMasterController implements Initializable {
         addQuestPane.setVisible(false);
         addPuzzlePane.setVisible(false);
         deleteQuestPane.setVisible(false);
+        questListPane.setVisible(false);
 
         paneView.setVisible(true);
     }
@@ -539,11 +612,6 @@ public class GameMasterController implements Initializable {
 
     @FXML
     void modifyRoomOnMouseClicked(MouseEvent event) {
-
-    }
-
-    @FXML
-    void questsListOnMouseClicked(MouseEvent event) {
 
     }
     @FXML

@@ -14,7 +14,7 @@ public class Game {
     private Timestamp startTime;
     private Timestamp endTime;
     private Long score;
-    private GameLog gameLog = new GameLog();
+    private GameLog gameLog;
     private HashSet<GameReview> gameReview = new HashSet<>();
     private BigDecimal price;
 
@@ -70,18 +70,8 @@ public class Game {
         return price;
     }
 
-    public void startGame() {
-        this.startTime = new Timestamp(System.currentTimeMillis());
-    }
-    public void endGame() {
-        this.endTime = new Timestamp(System.currentTimeMillis());
-        this.score = this.endTime.getTime() - this.startTime.getTime();
-        // add game to the scoreboard
-    }
-
-    public void timedOut() {
-        this.endTime = new Timestamp(System.currentTimeMillis());
-        this.score = Long.MAX_VALUE;
+    public void setGameLog(GameLog gameLog) {
+        this.gameLog = gameLog;
     }
 
     public void addReview(GameReview review) {
