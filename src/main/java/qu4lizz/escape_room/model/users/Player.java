@@ -1,11 +1,10 @@
 package qu4lizz.escape_room.model.users;
 
 public class Player extends Person {
-    private final String email;
     public Player(String name, String email) {
-        super(name);
-        this.email = email;
+        super(name, email);
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -19,6 +18,6 @@ public class Player extends Person {
             return false;
         }
         Player player = (Player) obj;
-        return player.email.equals(this.email);
+        return player.getEmail().equals(this.getEmail());
     }
 }

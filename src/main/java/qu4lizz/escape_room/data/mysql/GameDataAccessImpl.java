@@ -32,6 +32,16 @@ public class GameDataAccessImpl implements GameDataAccess {
             retVal = cs.executeUpdate() == 1;
             if (!retVal)
                 SQLUtil.getInstance().showErrorMessage();
+
+            query = "{call addReview(?,?,?,?)}";
+            cs = conn.prepareCall(query);
+            for (var rev : game.getGameReview()) {
+                cs.setString(1, rev.getReview());
+                cs.setString(2, rev.getPlayer());
+                cs.setTimestamp(3, game.getStartTime());
+                cs.setString(4, game.getRoomId());
+                cs.execute();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             SQLUtil.getInstance().showSQLException(e);
@@ -55,6 +65,40 @@ public class GameDataAccessImpl implements GameDataAccess {
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal.add(new Game(rs.getString(1),
+                                    rs.getTimestamp(2),
+                                    rs.getTimestamp(3),
+                                    rs.getLong(4),
+                                    rs.getString(5),
+                                    rs.getString(6),
+                                    rs.getBigDecimal(7)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            SQLUtil.getInstance().showSQLException(e);
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            SQLUtil.getInstance().close(ps, rs);
+        }
+        return retVal;
+    }
+
+    @Override
+    public List<Game> getGamesFromRoom(String roomName) {
+        List<Game> retVal = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query =    "SELECT * "
+                        + "FROM Game "
+                        + "WHERE Room_name = ?";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, roomName);
             rs = ps.executeQuery();
 
             while (rs.next())

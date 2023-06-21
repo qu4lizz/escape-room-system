@@ -97,12 +97,12 @@ public class QuestDataAccessImpl implements QuestDataAccess {
         ResultSet rs = null;
 
         String queryLock =    "SELECT * "
-                + "FROM Quest "
-                + "INNER JOIN Lock USING (idQuest)";
+                            + "FROM Quest"
+                            + "INNER JOIN `Lock` L ON Quest.idQuest = L.Quest_idQuest;";
 
         String queryPuzzle =    "SELECT * "
-                + "FROM Quest "
-                + "INNER JOIN Puzzle USING (idQuest)";
+                                + "FROM Quest "
+                                + "INNER JOIN Puzzle ON Puzzle.Quest_idQuest=Quest.idQuest;";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -112,7 +112,9 @@ public class QuestDataAccessImpl implements QuestDataAccess {
             while (rs.next())
                 retVal.add(new Lock(rs.getInt("idQuest"),
                         rs.getString("name"),
-                        rs.getString("solution")));
+                        rs.getString("solution"),
+                        rs.getString("Room_name"),
+                        rs.getInt("Inventory_idInventory")));
 
             ps = conn.prepareStatement(queryPuzzle);
             rs = ps.executeQuery();
@@ -121,7 +123,60 @@ public class QuestDataAccessImpl implements QuestDataAccess {
                 retVal.add(new Puzzle(rs.getInt("idQuest"),
                         rs.getString("name"),
                         rs.getString("solution"),
-                        Difficulty.values()[rs.getInt("difficulty")]));
+                        Difficulty.values()[rs.getInt("difficulty")],
+                        rs.getString("Room_name"),
+                        rs.getInt("Inventory_idInventory")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            SQLUtil.getInstance().showSQLException(e);
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            SQLUtil.getInstance().close(ps, rs);
+        }
+        return retVal;
+    }
+
+    @Override
+    public List<Quest> getQuestsForRoom(String roomName) {
+        List<Quest> retVal = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String queryLock =    "SELECT * "
+                            + "FROM Quest "
+                            + "INNER JOIN `Lock` L ON Quest.idQuest = L.Quest_idQuest "
+                            + "WHERE L.Room_name = ?;";
+
+        String queryPuzzle =    "SELECT * "
+                                + "FROM Quest "
+                                + "INNER JOIN Puzzle ON Puzzle.Quest_idQuest=Quest.idQuest "
+                                + "WHERE Puzzle.Room_name = ?;";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(queryLock);
+            ps.setString(1, roomName);
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal.add(new Lock(rs.getInt("idQuest"),
+                        rs.getString("name"),
+                        rs.getString("solution"),
+                        rs.getString("Room_name"),
+                        rs.getInt("Inventory_idInventory")));
+
+            ps = conn.prepareStatement(queryPuzzle);
+            ps.setString(1, roomName);
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal.add(new Puzzle(rs.getInt("idQuest"),
+                        rs.getString("name"),
+                        rs.getString("solution"),
+                        Difficulty.values()[rs.getInt("difficulty")],
+                        rs.getString("Room_name"),
+                        rs.getInt("Inventory_idInventory")));
         } catch (SQLException e) {
             e.printStackTrace();
             SQLUtil.getInstance().showSQLException(e);

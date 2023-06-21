@@ -9,4 +9,5 @@ public interface QuestDataAccess {
     List<Quest> getQuests();
     boolean updateQuest(int questId);
     boolean deleteQuest(int questId);
+    List<Quest> getQuestsForRoom(String roomName);
 }

@@ -31,6 +31,7 @@ public class Game {
         this.startTime = startTime;
         this.endTime = endTime;
         this.score = score;
+        this.price = payment;
     }
 
     public long getScore() {

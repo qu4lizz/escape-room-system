@@ -4,15 +4,19 @@ abstract public class Quest {
     private int id;
     private String name;
     private String solution;
+    private String roomName;
+    private Integer inventoryId;
 
-    public Quest(String name, String solution) {
+    public Quest(String name, String solution, String roomName, Integer inventoryId) {
         this.name = name;
         this.solution = solution;
+        this.roomName = roomName;
+        this.inventoryId = inventoryId;
     }
 
-    public Quest(int id, String name, String solution) {
-        this.name = name;
-        this.solution = solution;
+    public Quest(int id, String name, String solution, String roomName, Integer inventoryId) {
+        this(name, solution, roomName, inventoryId);
+        this.id = id;
     }
 
     public int getId() {
@@ -25,6 +29,14 @@ abstract public class Quest {
 
     public String getSolution() {
         return solution;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public Integer getInventoryId() {
+        return inventoryId;
     }
 
     @Override

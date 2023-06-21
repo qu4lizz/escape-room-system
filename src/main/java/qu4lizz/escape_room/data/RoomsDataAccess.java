@@ -9,4 +9,6 @@ public interface RoomsDataAccess {
     boolean updateRoom(String roomName);
     boolean deleteRoom(String roomName);
     List<Room> getRooms();
+
+    Room getRoom(String roomName);
 }

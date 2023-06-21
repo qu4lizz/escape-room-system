@@ -3,16 +3,18 @@ package qu4lizz.escape_room.model.info;
 public class GameReview {
     private String player;
     private String review;
-    private Rating rating;
 
-    public GameReview(String player, String review, Rating rating) {
+
+    public GameReview(String player, String review) {
         this.review = review;
-        this.rating = rating;
         this.player = player;
     }
 
+    public String getPlayer() {
+        return player;
+    }
 
-    public enum Rating {
-        ONE, TWO, THREE, FOUR, FIVE
+    public String getReview() {
+        return review;
     }
 }

@@ -13,8 +13,6 @@ public class Reservation {
         this.startTime = startTime;
     }
 
-
-
     public String getRoom() {
         return roomId;
     }

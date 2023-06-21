@@ -5,10 +5,8 @@ import qu4lizz.escape_room.model.game.Room;
 import qu4lizz.escape_room.utils.ConnectionPool;
 import qu4lizz.escape_room.utils.SQLUtil;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomsDataAccessImpl implements RoomsDataAccess {
@@ -18,14 +16,15 @@ public class RoomsDataAccessImpl implements RoomsDataAccess {
         Connection conn = null;
         CallableStatement cs = null;
 
-        String query = "{call addRoom(?,?,?)}";
+        String query = "{call addRoom(?,?,?,?)}";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             cs = conn.prepareCall(query);
 
             cs.setString(1, room.getName());
             cs.setInt(2, room.getMaxPlayers());
-            cs.setLong(3, room.getDuration());
+            cs.setTime(3, room.getDuration());
+            cs.setBigDecimal(4, room.getPrice());
 
             retVal = cs.executeUpdate() == 1;
 
@@ -52,7 +51,7 @@ public class RoomsDataAccessImpl implements RoomsDataAccess {
         Connection connection = null;
         CallableStatement callableStatement = null;
         ResultSet rs = null;
-        String callStatementItem = "{call deleteQuest(?)}";
+        String callStatementItem = "{call deleteRoom(?)}";
 
         try {
             connection = ConnectionPool.getInstance().checkOut();
@@ -71,6 +70,59 @@ public class RoomsDataAccessImpl implements RoomsDataAccess {
 
     @Override
     public List<Room> getRooms() {
-        return null;
+        List<Room> retVal = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query =    "SELECT * "
+                        + "FROM Room";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal.add(new Room(rs.getString("name"),
+                                    rs.getInt("maxPlayers"),
+                                    rs.getTime("duration"),
+                                    rs.getBigDecimal("price")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            SQLUtil.getInstance().showSQLException(e);
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            SQLUtil.getInstance().close(ps, rs);
+        }
+        return retVal;
+    }
+
+    @Override
+    public Room getRoom(String roomName) {
+        Room retVal = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query =    "SELECT * "
+                        + "FROM Room"
+                        + "WHERE name='" + roomName + "';";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            retVal =   new Room(rs.getString("name"),
+                                rs.getInt("maxPlayers"),
+                                rs.getTime("duration"),
+                                rs.getBigDecimal("price"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            SQLUtil.getInstance().showSQLException(e);
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            SQLUtil.getInstance().close(ps, rs);
+        }
+        return retVal;
     }
 }

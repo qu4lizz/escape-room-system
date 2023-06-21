@@ -117,9 +117,9 @@
       <AnchorPane fx:id="newGameControlPane" layoutX="231.0" layoutY="20.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ListView fx:id="gameLogListView" layoutX="37.0" layoutY="35.0" prefHeight="363.0" prefWidth="683.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="35.0" />
-            <Button layoutX="765.0" layoutY="202.0" mnemonicParsing="false" prefHeight="112.0" prefWidth="158.0" text="End game" wrapText="true" />
+            <Button layoutX="765.0" layoutY="202.0" mnemonicParsing="false" onMouseClicked="#endGameOnMouseClicked" prefHeight="112.0" prefWidth="158.0" text="End game" wrapText="true" />
             <VBox fx:id="vboxReviews" layoutX="35.0" layoutY="426.0" prefHeight="285.0" prefWidth="900.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="34.0" />
-            <Button layoutX="413.0" layoutY="732.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="142.0" text="Add game" />
+            <Button layoutX="413.0" layoutY="732.0" mnemonicParsing="false" onMouseClicked="#addGameAfterFinishOnMouseClicked" prefHeight="41.0" prefWidth="142.0" text="Add game" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="showGamesPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -144,15 +144,17 @@
       </AnchorPane>
       <AnchorPane fx:id="addRoomPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="65.0" prefHeight="41.0" prefWidth="192.0" text="Room name" textAlignment="CENTER" />
-            <TextField fx:id="roomNameTextField" layoutX="364.0" layoutY="107.0" prefHeight="41.0" prefWidth="240.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="156.0" prefHeight="41.0" prefWidth="192.0" text="Maximum players" textAlignment="CENTER" />
-            <TextField fx:id="maximumPlayersTextField" layoutX="364.0" layoutY="198.0" prefHeight="41.0" prefWidth="240.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="251.0" prefHeight="41.0" prefWidth="192.0" text="Duration (min)" textAlignment="CENTER" />
-            <TextField fx:id="durationTextField" layoutX="364.0" layoutY="293.0" prefHeight="41.0" prefWidth="240.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="386.0" layoutY="355.0" prefHeight="41.0" prefWidth="192.0" text="Choose quests" textAlignment="CENTER" />
-            <ListView fx:id="questsNewRoomListView" layoutX="274.0" layoutY="397.0" prefHeight="266.0" prefWidth="418.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="33.0" prefHeight="41.0" prefWidth="192.0" text="Room name" textAlignment="CENTER" />
+            <TextField fx:id="roomNameTextField" layoutX="364.0" layoutY="75.0" prefHeight="41.0" prefWidth="240.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="116.0" prefHeight="41.0" prefWidth="192.0" text="Maximum players" textAlignment="CENTER" />
+            <TextField fx:id="maximumPlayersTextField" layoutX="364.0" layoutY="158.0" prefHeight="41.0" prefWidth="240.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="199.0" prefHeight="41.0" prefWidth="192.0" text="Duration (min)" textAlignment="CENTER" />
+            <TextField fx:id="durationTextField" layoutX="364.0" layoutY="241.0" prefHeight="41.0" prefWidth="240.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="386.0" layoutY="376.0" prefHeight="41.0" prefWidth="192.0" text="Choose quests" textAlignment="CENTER" />
+            <ListView fx:id="questsNewRoomListView" layoutX="274.0" layoutY="418.0" prefHeight="266.0" prefWidth="418.0" />
             <Button layoutX="379.0" layoutY="721.0" mnemonicParsing="false" onMouseClicked="#createNewRoomOnMouseClicked" prefHeight="41.0" prefWidth="209.0" text="Create new room" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="282.0" prefHeight="41.0" prefWidth="192.0" text="Price" textAlignment="CENTER" />
+            <TextField fx:id="priceTextField" layoutX="364.0" layoutY="324.0" prefHeight="41.0" prefWidth="240.0" />
          </children></AnchorPane>
       <AnchorPane fx:id="deleteRoomPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -167,7 +169,7 @@
             <Button layoutX="300.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#removeReservationOnMouseClicked" prefHeight="41.0" prefWidth="368.0" text="REMOVE RESERVATION" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.96962919535076" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="addReservationPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="addReservationPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="76.0" prefHeight="29.0" prefWidth="240.0" text="Choose room" />
             <ChoiceBox fx:id="chooseRoomForReservationChoiceBox" layoutX="379.0" layoutY="106.0" prefHeight="36.0" prefWidth="209.0" />
@@ -177,6 +179,7 @@
             <DatePicker fx:id="reservationDatePicker" layoutX="366.0" layoutY="384.0" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="363.0" layoutY="511.0" prefHeight="29.0" prefWidth="240.0" text="Choose time" />
             <TextField fx:id="chooseTimeForReservationTextField" alignment="CENTER" layoutX="375.0" layoutY="541.0" promptText="hh:mm" />
+            <Button layoutX="395.0" layoutY="666.0" mnemonicParsing="false" onMouseClicked="#addNewReservationOnMouseClicked" prefHeight="41.0" prefWidth="178.0" text="Add reservation" />
          </children></AnchorPane>
       <AnchorPane fx:id="deleteReservationPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -222,7 +225,7 @@
             <Button layoutX="376.0" layoutY="652.0" mnemonicParsing="false" onMouseClicked="#createNewQuestOnMouseClicked" prefHeight="41.0" prefWidth="216.0" text="Create new quest" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="deleteQuestPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="deleteQuestPane" layoutX="231.0" prefHeight="803.0" prefWidth="969.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ListView fx:id="questsListView" layoutX="98.0" layoutY="38.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="35.0" />
             <Button layoutX="406.0" layoutY="718.0" mnemonicParsing="false" onMouseClicked="#deleteChosenQuestOnMouseClicked" prefHeight="41.0" prefWidth="157.0" text="Delete quest" />
