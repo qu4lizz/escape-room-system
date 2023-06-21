@@ -26,15 +26,12 @@ public class SignInController {
         String type;
         String usernameInput = usernameTextField.getText();
         String passwordInput = passwordTextField.getText();
-        // TODO: remove
-        /*
+
         if (usernameInput.equals("") || passwordInput.equals("")) {
             PopUpController.showStage("Sign In", "Enter valid parameters");
             return;
-        }*/
+        }
 
-        usernameInput = "gm1";
-        passwordInput = "gm1";
         String result = SQLUtil.signIn(usernameInput, passwordInput);
         if (result == null) {
             PopUpController.showStage("Sign In", "Enter valid parameters");
