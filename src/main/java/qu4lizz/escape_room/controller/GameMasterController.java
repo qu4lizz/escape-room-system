@@ -34,6 +34,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GameMasterController implements Initializable {
     private static Stage stage;
@@ -296,7 +297,7 @@ public class GameMasterController implements Initializable {
     // Remove reservation button and pane
     @FXML
     void removeReservationOnMouseClicked(MouseEvent event) {
-        List<Reservation> reservations = reservationDataAccess.getReservations();
+        List<Reservation> reservations = reservationDataAccess.getReservations().stream().sorted(Comparator.comparing(Reservation::getStartTime)).collect(Collectors.toList());
         reservationsListView.getItems().clear();
         reservationsListView.getItems().addAll(reservations);
         setActivePane(reservationsPane, deleteReservationPane);

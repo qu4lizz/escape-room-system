@@ -100,7 +100,10 @@ public class ReservationDataAccessImpl implements ReservationDataAccess {
         Statement stmt = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM Reservation WHERE startDate > NOW() - INTERVAL 60 MINUTE";
+        String query = "SELECT *\n" +
+                "FROM Reservation R\n" +
+                "LEFT OUTER JOIN Game G on R.Room_name = G.Room_name AND R.startDate = G.startDate\n" +
+                "WHERE G.endDate IS NULL AND R.startDate > NOW() - INTERVAL 60 MINUTE";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             stmt = conn.createStatement();
