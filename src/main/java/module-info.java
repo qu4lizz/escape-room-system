@@ -1,7 +1,10 @@
-module escape_room {
-    requires name.remal.gradle_plugins.lombok;
+module qu4lizz.escape_room {
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires java.sql;
 
-    opens qu4lizz.escape_room.users to name.remal.gradle_plugins.lombok;
-    exports qu4lizz.escape_room.users;
-
+    exports qu4lizz.escape_room.controller;
+    opens qu4lizz.escape_room.controller to javafx.fxml;
+    exports qu4lizz.escape_room;
+    opens qu4lizz.escape_room to javafx.fxml;
 }
