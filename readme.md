@@ -1,1 +1,13 @@
-# Escape Room
+# Escape Room System
+
+## Description
+<p align="justify">This software system is designed to facilitate the reservation and management of games in an escape room. Team representatives who wish to participate in a game can make a reservation. The necessary information for the reservation includes selecting a room to escape from, the date and time, and the names and email addresses of the players, which will uniquely identify each player. Each room has a name, maximum number of players allowed per session, duration, and price per player. A team participating in a game is identified by its name and consists of players. If a team has previously played and wants to participate with the same name, either in the same room or a different one, it must consist of the same players. After completing a game, each team member can leave a review for the room by providing a textual comment. </p>
+
+<p align="justify">A game master oversees and manages the game and logs into the system using a unique username and password. The game master monitors and manages reservations in the system. When a game starts, the game master gives the start signal, and likewise, if the team successfully solves all the puzzles and escapes the room, the game master gives the signal that the game is finished. The team is then automatically ranked on the leaderboard for that room. If necessary, the game master assists the team by providing hints in case of a deadlock and keeps a record of the team's actions, i.e., solved puzzles. The game master has the ability to add, modify, and delete rooms and puzzles. Each game can be uniquely identified by the room identifier and start time.</p>
+
+<p align="justify">The system allows users to view the leaderboard for each room, where teams are ranked based on their achieved results. The result is calculated by considering the time it took for the team to solve all the puzzles and escape the room, where a lower time indicates a better result. If the maximum time allowed for a specific room elapses before the team escapes, they are ranked last on the leaderboard. Additionally, it is possible to view all games played by a specific team or individual player. The system also provides an overview of the total revenue generated from all completed games.</p>
+
+<p align="justify">As a user of the system, there is also an administrator account with predefined login credentials. The administrator has the ability to add and delete other users.</p>
+
+## Motivation
+<p align="justify">Project for Database course implementing data persistence using MySQL. This is a pilot application.</p>
